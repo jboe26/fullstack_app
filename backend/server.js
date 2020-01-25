@@ -4,6 +4,9 @@ var cors = require('cors');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const Data = require('./data');
+// const mongo = require('mongodb').MongoClient
+
+
 
 const API_PORT = 3001;
 const app = express();
@@ -12,17 +15,19 @@ const router = express.Router();
 
 // this is our MongoDB database
 const dbRoute =
-  'mongodb+srv://<josh>:<aspen>@cluster0-uuvdx.mongodb.net:27017';
+  'mongodb+srv://josh:<aspen>@cluster0-uuvdx.mongodb.net/test?retryWrites=true&w=majority';
 
-// connects our back end code with the database
-mongoose.connect(dbRoute, { useNewUrlParser: true });
-
-let db = mongoose.connection;
-
-db.once('open', () => console.log('connected to the database'));
-
-// checks if connection with the database is successful
+mongoose.connect(dbRoute, { useNewUrlParser: true }).then(() => {
+  let db = mongoose.connection;
+  db.once('open', () => console.log('connected to the database'));
+  // checks if connection with the database is successful
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+console.log("Connected to Database");
+}).catch((err) => {
+    console.log("Not Connected to Database ERROR! ", err);
+});
+
+// It stops here - MongoNetworkError // 
 
 // (optional) only made for logging and
 // bodyParser, parses the request body to be a readable json format

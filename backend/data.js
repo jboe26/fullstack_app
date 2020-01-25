@@ -1,11 +1,8 @@
 // /backend/data.js
 const mongoose = require("mongoose");
-mongoose.connect('mongodb:localhost/users_test');
-mongoose.connection
- .once('open', () => console.log('Good to go!'))
- .on('error', (error) => {
- console.warn('Warning', error);
- });
+mongoose.connect('mongodb:localhost/27017');
+
+
 const Schema = mongoose.Schema;
 
 // this will be our data base's data structure 
